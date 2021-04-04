@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import cityName from './assets/taiwan-zip-code.json'
+import cityName from './assets/taiwan-zip-code.json';
 export default {
   name: 'App',
   data:()=>({
@@ -47,6 +47,12 @@ export default {
     },
   }),
   components: {
+  },
+  mounted(){
+    const api = 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json';
+    this.$http.get(api).then((response) => {
+      console.log(response);
+    });
   },
 };
 </script>
