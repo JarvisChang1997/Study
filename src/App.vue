@@ -37,10 +37,12 @@
 
 <script>
 import cityName from './assets/taiwan-zip-code.json';
+let that=this;
 export default {
   name: 'App',
   data:()=>({
     cityName,
+    data:[],
     select:{
       city:'台北市',
       area:'中山區',
@@ -50,8 +52,8 @@ export default {
   },
   mounted(){
     const api = 'https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json';
-    this.$http.get(api).then((response) => {
-      console.log(response);
+    this.axios.get(api).then((response) => {
+      this.data=response.data.features;
     });
   },
 };
