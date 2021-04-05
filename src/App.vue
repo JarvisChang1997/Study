@@ -1,7 +1,6 @@
 <template>
 <div id="app">
-  <!-- <div class='row no-gutters'></div> -->
-  <div>
+  <div id='left-panel' class="col-md-4">
     <!-- 左 -->
     <div>
         <label>縣市</label>
@@ -25,7 +24,7 @@
       
   </div>
 
-    <div>
+    <div id='right-panel' class="col-md-10">
       <!-- 地圖 -->
       <div>
         <div id="map"></div>
@@ -36,6 +35,7 @@
 </template>
 
 <script>
+let openStreetMap={};
 import cityName from './assets/taiwan-zip-code.json';
 let that=this;
 export default {
@@ -55,6 +55,15 @@ export default {
     this.axios.get(api).then((response) => {
       this.data=response.data.features;
     });
+    openStreetMap=L.map('map',{
+      center: [25.042474, 121.513729],
+      zoom:18,
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 30,
+    }).addTo(openStreetMap);
   },
 };
 </script>
@@ -66,4 +75,17 @@ export default {
   position: relative;
   height: 100vh;
   }
+  $left-w: 200px;
+  #left-panel{
+    position: relative;
+    float:left;
+    width: $left-w;
+    height:100vh;
+  }
+
+  #right-panel{
+    position: relative;
+    float:right;
+    height:100vh;
+}
 </style>
