@@ -37,7 +37,6 @@
 <script>
 let openStreetMap={};
 import cityName from './assets/taiwan-zip-code.json';
-let that=this;
 export default {
   name: 'App',
   data:()=>({
@@ -56,15 +55,33 @@ export default {
       this.data=response.data.features;
     });
     openStreetMap=L.map('map',{
+      trackResize: false,
       center: [25.042474, 121.513729],
-      zoom:18,
+      zoom:15,
     });
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 30,
+      maxZoom: 19,
     }).addTo(openStreetMap);
   },
+  computed:{
+    get_Pharmacies(){
+      let pharmacies= this.data.filter((pharmacy)=>{
+        if(!this.select.area){
+          return pharmacy.properties.county === this.select.city;
+        }
+        return pharmacy.properties.town === this.select.area;
+      });
+      return pharmacies;
+    },
+  },
+  //監聽
+  watch:{
+    get_Pharmacies(value){
+      console.log(value);
+    }
+  }
 };
 </script>
 
